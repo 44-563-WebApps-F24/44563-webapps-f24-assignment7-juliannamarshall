@@ -1,57 +1,68 @@
 <!DOCTYPE html>
-<html> <head> <style>
-    .flex-container {
-      display: flex;  flex-direction:row;
-      background-color: red;
-  }
+<html> 
+	<head>
+		<title>divlist.html</title>
+		<style>
+		.flex-container {
+			display: flex;  flex-direction:row;
+			background-color: red;
+		}
 
-.flex-container > div {  /*div children of the flex container*/
-  background-color: #f1f1f1; 
-  margin: 10px;  padding: 20px;  font-size: 30px;
-}
+		.flex-container > div {  /*div children of the flex container*/
+			background-color: #f1f1f1; 
+			margin: 10px;  padding: 20px;  font-size: 30px;
+		}
 
-/* Responsive layout */
-@media (max-width: 600px) { 
-	 .flex-container{
-		 flex-direction:column;
-		 background-color: green;
-	  }
-	}
-</style></head>
+		/* Responsive layout */
+		@media (max-width: 600px) { 
+			.flex-container{
+				flex-direction:column;
+				background-color: green;
+			}
+		}
+		</style>
+	</head>
+	<body>
+		<h2>Julianna Marshall builds list with divs</h2>
+		<input type="text" id="inputText">
+    <button id="addEndButton">Add End</button>
+    <button id="addFrontButton">Add Front</button>
+    <button id="removeButton">Remove</button>
+    <div class="flex-container" id="flexContainer">
+        <div class="divlist">Initial Div 1</div>
+        <div class="divlist">Initial Div 2</div>
+    </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("addEndButton").onclick = addEnd;
+            document.getElementById("addFrontButton").onclick = addFront;
+            document.getElementById("removeButton").onclick = remove;
+        });
 
+        function addEnd() {
+            const input = document.getElementById("inputText").value;
+            const newDiv = document.createElement("div");
+            newDiv.innerHTML = input;
+            newDiv.className = "divlist";
+            document.getElementById("flexContainer").appendChild(newDiv);
+        }
 
-<body>
-		<div class="flex-container" id="target">
-		  <div class="queue">row item 1</div>   
-		  <div class="queue">row item 2</div>  
-		  <div class="queue">row item 3</div>  
-		</div>
-	
-	<p> Press the button to create an new element of type div and then add it to the container.
-		</p>
-		<button onclick="makeNewDiv()">Add one</button>
-	
-	
-</body>
-<script>
-	function makeNewDiv(){
-		/* make the div and its text */
-		let element = document.createElement("div")
-		element.innerHTML = "an item after 3"
-		element.style.color = "orange"
-		element.className = "queue"
+        function addFront() {
+            const input = document.getElementById("inputText").value;
+            const newDiv = document.createElement("div");
+            newDiv.innerHTML = input;
+            newDiv.className = "divlist";
+            document.getElementById("flexContainer").insertBefore(newDiv, document.getElementById("flexContainer").firstChild);
+        }
 
-		/* add it to the container */
-		let container = document.getElementById('target')
-		container.insertBefore(element, container.firstChild)
-		//container.appendChild(element)
-		let items = document.getElementsByClassName('queue')
-		let last = items.length - 1
-		console.log("last is " + last)
-		items[last].remove()
-
-		
-	}
-</script>
+        function remove() {
+            const divListItems = document.getElementsByClassName("divlist");
+            const length = divListItems.length;
+            if (length > 0) {
+                const middleIndex = Math.floor(length / 2);
+                divListItems[middleIndex].remove();
+            }
+        }
+    </script>
 </html>	
